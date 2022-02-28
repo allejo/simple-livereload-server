@@ -5,6 +5,7 @@
 const express = require('express');
 const tinylr = require('tiny-lr')();
 const watch = require('node-watch');
+const getPort = require('get-port');
 
 function notifyLiveReload(event, filename) {
     var fileName = require('path').relative(__dirname, filename);
@@ -17,16 +18,22 @@ function notifyLiveReload(event, filename) {
 }
 
 const dir = process.argv[2] || '_site';
+const lrPort = 35729;
 
-tinylr.listen(35729);
+tinylr.listen(lrPort);
 watch(dir, { recursive: true }, notifyLiveReload);
 
-var app = express();
+const app = express();
 
-app.use(require('connect-livereload')({ port: 35729 }));
 app.use(express.static(dir, {
     extensions: ['html']
 }));
-app.listen(3000, '0.0.0.0');
 
-console.log('site available on port 3000');
+(async () => {
+    const port = await getPort({ port: [3000, 3001, 3002, 3003, 3004, 3005] });
+
+    app.use(require('connect-livereload')({ port: lrPort }));
+    app.listen(port, '0.0.0.0');
+
+    console.log('site available on port http://localhost:' + port);
+})();

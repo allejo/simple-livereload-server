@@ -24,6 +24,7 @@
   "dependencies": {
     "connect-livereload": "^0.6.0",
     "express": "^4.15.3",
+    "get-port": "^5.1.1",
     "node-watch": "^0.5.5",
     "path": "^0.12.7",
     "tiny-lr": "^1.0.5"
