@@ -1,6 +1,6 @@
 {
   "name": "slrs",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A simple command line tool to launch an Express webserver with livereload autoinjected",
   "main": "index.js",
   "scripts": {
